@@ -1,0 +1,30 @@
+version: "3.1"
+services:
+    www:
+        build: .
+        ports: 
+            - "8000:80"
+        volumes:
+            - ./www:/var/www/html/
+        links:
+            - db
+        networks:
+            - default
+        restart: always
+    db:
+        image: mysql:8.0
+        ports: 
+            - "3306:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        command: --secure-file-priv=''
+        environment:
+            MYSQL_DATABASE: sqlitraining
+            MYSQL_ROOT_PASSWORD: root 
+        volumes:
+            - ./udf:/usr/lib/mysql/plugin
+            - persistent:/var/lib/mysql
+        networks:
+            - default
+        restart: always
+volumes:
+    persistent:
