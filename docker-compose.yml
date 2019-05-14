@@ -15,8 +15,7 @@ services:
         image: mysql:8.0
         ports: 
             - "3306:3306"
-        command: --default-authentication-plugin=mysql_native_password
-        command: --secure-file-priv=''
+        command: --default-authentication-plugin=mysql_native_password --secure-file-priv=''
         environment:
             MYSQL_DATABASE: sqlitraining
             MYSQL_ROOT_PASSWORD: root 
