@@ -29,25 +29,26 @@ ini_set('display_errors', 1);
 if (isset($_GET["user"])){
 		$user = $_GET["user"];
 		$q = "Select * from users where username = '".$user."'";
-		
-	
-	if (!mysqli_query($con,$q))
-	{
-		echo 'Error: ' . mysqli_error($con);
-	}else{
-		$result = mysqli_query($con,$q);
-		
 
-		$row = mysqli_fetch_array($result);
-		
-
-		if ($row){
-		$_SESSION["username"] = $row[1];
-		$_SESSION["name"] = $row[3];
-		$_SESSION["descr"] = $row[4];
-		
-}
-	}
+		if (mysqli_multi_query($con,$q))
+		{
+		  do
+			{
+			// Store first result set
+			if ($result=mysqli_store_result($con)) {
+			  // Fetch one and one row
+			  while ($row=mysqli_fetch_row($result))
+				{
+					$username = $row[1];
+					$name = $row[3];
+					$descr = $row[4];
+				}
+			  // Free result set
+			  mysqli_free_result($result);
+			  }
+			}
+		  while (mysqli_next_result($con));
+		}
 }//end if isset
 
 ?>		
@@ -62,7 +63,7 @@ if (isset($_GET["user"])){
 					Username:  
 				</td>
 				<td>
-					<?php echo $row[1]; ?>
+					<?php echo $username; ?>
 				</td>
 			</tr>
 
@@ -71,7 +72,7 @@ if (isset($_GET["user"])){
 					Name:  
 				</td>
 				<td>
-					<?php echo $row[3]; ?>
+					<?php echo $name; ?>
 				</td>
 			</tr>
 
@@ -80,7 +81,7 @@ if (isset($_GET["user"])){
 					Description: 
 				</td>
 				<td>
-					<?php echo $row[4]; ?>
+					<?php echo $descr; ?>
 				</td>
 			</tr>
 			</table>
