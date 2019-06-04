@@ -42,7 +42,3 @@ The `sqlitraining.sql` file contains the entire database as an export. This file
 
 - Pull requests are welcome
 - Send us ideas and suggestions or feedback at contact@appsecco.com
-
-## To-Do
-
-- Add stacked query to `os_sqli.php` to be able to load so file from plugin dir to perform command exec.
