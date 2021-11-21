@@ -53,7 +53,9 @@ ini_set('display_errors', 1);
 <?php
 if (isset($_POST["searchitem"])) {
 
-$q = "Select * from products where product_name like '".$_POST["searchitem"]."%'";
+	$q = "Select * from products where product_name like '".mysqli_real_escape_string($con,$_POST["searchitem"])."%'";
+
+
 
 if (isset($_GET['debug']))
 {
