@@ -58,11 +58,24 @@ ini_set('display_errors', 1);
         <div class="col-lg-6">
 
 <?php
+   function check_string($my_string){
+     $regex = preg_match('/[\'\/~`\!@#\$%\^&\*\(\)_\-\+=\{\}\[\]\|;:"\<\>,\.\?\\\]/', $my_string);
+      if($regex == 1)
+{
+         print("Username has not been accepted - invalid character. Are you trying to hack? We are smarter than you");
+         exit();
+}
+   }
+?>
+
+
+<?php
 //echo md5("pa55w0rd");
 
 if (!empty($_REQUEST['uid'])) {
 $username = ($_REQUEST['uid']);
 $pass = $_REQUEST['password'];
+check_string($username);
 
 $q = "SELECT * FROM users where username='".$username."' AND password = '".md5($pass)."'" ;
 
